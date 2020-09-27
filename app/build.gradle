@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+apply from: '../config.gradle'
+
+android {
+
+    defaultConfig {
+
+        // 无痛修改包名（推荐使用第二种方案）：https://www.jianshu.com/p/17327e191d2e
+        applicationId 'com.wzly.base.app'
+
+        // 仅保留中文语种的资源
+        resConfigs 'zh'
+
+        // 仅保留 xxhdpi 图片资源（目前主流分辨率 1920 * 1080）
+        resConfig 'xxhdpi'
+
+        // 仅保留两种架构的 so 库，根据 Bugly 统计得出
+        ndk {
+            // armeabi：万金油架构平台（占用率：0%）
+            // armeabi-v7a：曾经主流的架构平台（占用率：10%）
+            // arm64-v8a：目前主流架构平台（占用率：90%）
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        // 开启 Dex 分包
+        multiDexEnabled true
+
+        // 混淆配置
+        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+
+    // APK 签名的那些事：https://www.jianshu.com/p/a1f8e5896aa2
+//    signingConfigs {
+//        config {
+//            storeFile file(StoreFile)
+//            storePassword StorePassword
+//            keyAlias KeyAlias
+//            keyPassword KeyPassword
+//        }
+//    }
+
+    buildTypes {
+
+        debug {
+            debuggable true
+            jniDebuggable true
+            // 移除无用的资源文件
+            shrinkResources false
+            // ZipAlign 优化
+            zipAlignEnabled false
+            // 设置混淆
+            minifyEnabled false
+            // 开发环境下的 BuglyId
+            buildConfigField 'String', 'BUGLY_ID', '\"请自行替换 Bugly 上面的 AppID\"'
+//            signingConfig signingConfigs.config
+        }
+
+        release {
+            debuggable false
+            jniDebuggable false
+            // 移除无用的资源文件
+            shrinkResources true
+            // ZipAlign 优化
+            zipAlignEnabled true
+            // 设置混淆
+            minifyEnabled true
+            // 正式环境下的 BuglyId
+            buildConfigField 'String', 'BUGLY_ID', '\"请自行替换 Bugly 上面的 AppID\"'
+//            signingConfig signingConfigs.config
+        }
+    }
+
+    packagingOptions {
+        // 剔除这个包下的所有文件（除了签名信息）
+        exclude 'META-INF/*******'
+    }
+
+    // AOP 配置
+//    aspectjx {
+//        // 排除一些第三方库的包名（Gson、 LeakCanary 和 AOP 有冲突）
+//        // 否则就会起冲突：ClassNotFoundException: Didn't find class on path: DexPathList
+//        exclude 'androidx', 'com.google', 'com.squareup', 'com.alipay', 'com.taobao', 'org.apache'
+//    }
+
+    applicationVariants.all { variant ->
+
+        // Apk 输出文件名配置
+        variant.outputs.all { output ->
+            outputFileName = rootProject.getName() + '_v' + variant.versionName + '_' + variant.buildType.name
+            if (variant.buildType.name == buildTypes.release.getName()) {
+                outputFileName += '_' + new Date().format('MMdd')
+            }
+            outputFileName += '.apk'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
+
+}
