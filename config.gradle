@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionName '0.0.1'//版本号固定格式 a.b.c ；与后台统一判断版本更新
         versionCode 1
     }
