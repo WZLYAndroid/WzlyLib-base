@@ -1,7 +1,7 @@
 package com.wzly.base.retrofit.consumer;
 
 import com.hjq.base.R;
-import com.wzly.base.retrofit.constant.BaseHttpCodeConstant;
+import com.wzly.base.retrofit.constant.HttpCodeCheck;
 import com.wzly.base.retrofit.exception.ErrorCodeException;
 import com.wzly.base.retrofit.exception.LoginException;
 import com.wzly.base.retrofit.listener.HttpErrorMessageListener;
@@ -28,7 +28,7 @@ public abstract class HttpErrorConsumer implements Consumer<Throwable>, HttpErro
     /**
      * 接口失败的两种情况：
      * 1. 接口真实失败
-     * 2. 接口访问成功，返回数据 code != {@link BaseHttpCodeConstant#CODE_SUCCESS}
+     * 2. 接口访问成功，返回数据 ； 但 code 错误 {@link HttpCodeCheck#isSuccessCode(int)}
      * <p>
      * 1. 第一次获取缓存失败，需要再次获取数据判断
      * if (e instanceof HttpException
@@ -44,7 +44,7 @@ public abstract class HttpErrorConsumer implements Consumer<Throwable>, HttpErro
         e.printStackTrace();
 
         //接口请求异常 统一处理； 包含自定义登录异常
-        if (e instanceof LoginException && ((LoginException) e).isTokenExpried()) {
+        if (e instanceof LoginException) {
             //token 失效, 发送通知
             EventBus.getDefault().post(new LoginStatusChangeNotify(((LoginException) e).getErrorCode()));
             return;

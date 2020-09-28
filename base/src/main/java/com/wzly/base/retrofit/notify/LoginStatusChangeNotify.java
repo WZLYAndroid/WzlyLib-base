@@ -1,7 +1,7 @@
 package com.wzly.base.retrofit.notify;
 
 
-import com.wzly.base.retrofit.constant.BaseHttpCodeConstant;
+import com.wzly.base.retrofit.constant.HttpCodeCheck;
 
 /**
  * <pre>
@@ -15,7 +15,7 @@ import com.wzly.base.retrofit.constant.BaseHttpCodeConstant;
 public class LoginStatusChangeNotify {
 
     /**
-     * 对应接口返回的 code {@link BaseHttpCodeConstant}
+     * 对应接口返回的 code {@link HttpCodeCheck}
      */
     public int loginCode = -1;
 

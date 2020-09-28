@@ -1,8 +1,5 @@
 package com.wzly.base.retrofit.exception;
 
-
-import com.wzly.base.retrofit.constant.BaseHttpCodeConstant;
-
 /**
  * <pre>
  *     @author : jarylan
@@ -19,15 +16,6 @@ public class LoginException extends RuntimeException {
     public LoginException(String message, int mErrorCode) {
         super(message);
         this.mErrorCode = mErrorCode;
-    }
-
-    /**
-     * token 是否失效
-     *
-     * @return 失效返回 true
-     */
-    public boolean isTokenExpried() {
-        return mErrorCode == BaseHttpCodeConstant.CODE_ERROR_INVALID_TOKEN;
     }
 
     public int getErrorCode() {

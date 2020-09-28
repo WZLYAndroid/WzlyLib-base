@@ -1,14 +1,11 @@
 package com.wzly.base.retrofit.exception;
 
-
-import com.wzly.base.retrofit.constant.BaseHttpCodeConstant;
-
 /**
  * <pre>
  *     @author : jarylan
  *     e-mail : jarylan@foxmail.com
  *     time   : 2018/12/18
- *     desc   : 自定义异常 ， 接口请求成功，但是 code != {@link BaseHttpCodeConstant#CODE_SUCCESS}
+ *     desc   : 自定义异常 ， 接口请求成功，但是 code 错误
  *     version: 1.0
  * </pre>
  */
