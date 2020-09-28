@@ -104,4 +104,5 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.0'
 
     implementation project(':base')
+//    implementation 'com.github.WZLYAndroid:WzlyLib-base:0.0.2'
 }
