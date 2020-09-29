@@ -37,7 +37,6 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
 
-import com.hjq.base.R;
 import com.wzly.base.action.ActivityAction;
 import com.wzly.base.action.AnimAction;
 import com.wzly.base.action.ClickAction;

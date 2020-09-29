@@ -1,4 +1,4 @@
-package com.wzly.base.retrofit.constant;
+package com.wzly.base.retrofit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +62,10 @@ public class HttpCodeCheck {
     }
 
     /**
-     * 返回该 code 是否是接口请求成功的 code
+     * @return true 为 错误码
      */
-    public boolean isSuccessCode(int code) {
-        return codeSuccess == code;
+    public boolean isErrorCode(int code) {
+        return codeSuccess != code;
     }
 
     /**

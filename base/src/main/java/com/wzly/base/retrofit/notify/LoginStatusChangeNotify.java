@@ -1,7 +1,7 @@
 package com.wzly.base.retrofit.notify;
 
 
-import com.wzly.base.retrofit.constant.HttpCodeCheck;
+import com.wzly.base.retrofit.HttpCodeCheck;
 
 /**
  * <pre>

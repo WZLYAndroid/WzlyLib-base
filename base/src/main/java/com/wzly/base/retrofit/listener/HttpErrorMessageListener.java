@@ -1,7 +1,7 @@
 package com.wzly.base.retrofit.listener;
 
 
-import com.wzly.base.retrofit.constant.HttpCodeCheck;
+import com.wzly.base.retrofit.HttpCodeCheck;
 import com.wzly.base.retrofit.consumer.HttpErrorConsumer;
 import com.wzly.base.retrofit.exception.ErrorCodeException;
 import com.wzly.base.retrofit.exception.LoginException;
@@ -20,7 +20,7 @@ public interface HttpErrorMessageListener {
     /**
      * 接口失败的两种情况：
      * 1. 接口真实失败
-     * 2. 接口访问成功，返回数据 ； 但 code 错误 {@link HttpCodeCheck#isSuccessCode(int)}
+     * 2. 接口访问成功，返回数据 ； 但 code 错误 {@link HttpCodeCheck#isErrorCode(int)}
      *
      * @param errorMsg 错误信息、可直接吐丝提示； 详见{@link HttpErrorConsumer#accept(Throwable)} 的处理
      * @param e        原生错误、 包含自定义的 {@link ErrorCodeException},{@link LoginException}

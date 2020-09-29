@@ -1,7 +1,7 @@
 package com.wzly.base.retrofit.consumer;
 
 
-import com.wzly.base.retrofit.constant.HttpCodeCheck;
+import com.wzly.base.retrofit.HttpCodeCheck;
 import com.wzly.base.retrofit.exception.ErrorCodeException;
 import com.wzly.base.retrofit.exception.LoginException;
 import com.wzly.base.retrofit.result.BaseResult;
@@ -25,7 +25,7 @@ public abstract class HttpBeanFunction<T extends BaseResult, R> implements Funct
         if (HttpCodeCheck.getInstance().isInvalidToken(t.code)) {
             throw new LoginException(t.msg, t.code);
         }
-        if (HttpCodeCheck.getInstance().isSuccessCode(t.code)) {
+        if (HttpCodeCheck.getInstance().isErrorCode(t.code)) {
             throw new ErrorCodeException(t.msg, t, t.code);
         }
         return null;

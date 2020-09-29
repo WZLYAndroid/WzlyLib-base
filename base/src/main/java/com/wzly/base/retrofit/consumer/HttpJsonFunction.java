@@ -2,7 +2,7 @@ package com.wzly.base.retrofit.consumer;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.wzly.base.retrofit.constant.HttpCodeCheck;
+import com.wzly.base.retrofit.HttpCodeCheck;
 import com.wzly.base.retrofit.exception.ErrorCodeException;
 import com.wzly.base.retrofit.exception.LoginException;
 import com.wzly.base.retrofit.result.BaseResult;
@@ -27,7 +27,7 @@ public abstract class HttpJsonFunction<R> implements Function<JsonObject, R> {
         if (HttpCodeCheck.getInstance().isInvalidToken(result.code)) {
             throw new LoginException(result.msg, result.code);
         }
-        if (HttpCodeCheck.getInstance().isSuccessCode(result.code)) {
+        if (HttpCodeCheck.getInstance().isErrorCode(result.code)) {
             throw new ErrorCodeException(result.msg, jsonObject, result.code);
         }
         return null;

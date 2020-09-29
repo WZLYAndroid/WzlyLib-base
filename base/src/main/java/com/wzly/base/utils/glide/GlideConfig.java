@@ -13,7 +13,7 @@ import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
-import com.hjq.base.R;
+import com.wzly.base.R;
 
 import java.io.File;
 import java.io.InputStream;

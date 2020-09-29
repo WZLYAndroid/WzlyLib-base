@@ -1,7 +1,7 @@
 // 通用配置
 android {
 
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
