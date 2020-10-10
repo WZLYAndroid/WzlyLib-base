@@ -17,7 +17,10 @@ import androidx.annotation.NonNull;
  */
 public class BaseResult {
 
-    @SerializedName("code")
+    /**
+     * "error_code" 是为了兼容 C 端接口返回的字段
+     */
+    @SerializedName(value = "code", alternate = "error_code")
     public int code;
     @SerializedName("msg")
     public String msg = "";
