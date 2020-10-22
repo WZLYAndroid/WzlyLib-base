@@ -111,6 +111,11 @@ public abstract class BaseActivity extends AppCompatActivity
         return findViewById(Window.ID_ANDROID_CONTENT);
     }
 
+    @Override
+    public Context getContext() {
+        return this;
+    }
+
     /**
      * startActivityForResult 方法优化
      */
