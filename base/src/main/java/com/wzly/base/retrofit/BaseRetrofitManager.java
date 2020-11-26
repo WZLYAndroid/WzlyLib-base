@@ -78,12 +78,32 @@ public abstract class BaseRetrofitManager<A extends BaseApiService> {
     }
 
     /**
+     * 将所有的 ApiService 重置为空
+     */
+    protected void resetApiService() {
+        mGeneralApiService = null;
+        mForceCacheApiService = null;
+        mForceNetWorkApiService = null;
+        mForceCacheAndRequestAgainApiService = null;
+        mTimeLimitNetAndCacheApiService = null;
+    }
+
+    /**
      * 大众接口，直接调用
      */
     public A getApiService() {
         return AppUtil.isAppDebug(AppUtil.getContext()) ?
                 getNewApiService(HttpCacheConstant.NET_AND_CACHE, BaseCacheInterceptor.DEFAULT_NETWORK_CACHE_MAX_AGE, null) :
                 getReleaseApiService(HttpCacheConstant.NET_AND_CACHE, BaseCacheInterceptor.DEFAULT_NETWORK_CACHE_MAX_AGE, null);
+    }
+
+    /**
+     * 特殊要求接口
+     */
+    public A getApiService(int cache) {
+        return AppUtil.isAppDebug(AppUtil.getContext()) ?
+                getNewApiService(cache, BaseCacheInterceptor.DEFAULT_NETWORK_CACHE_MAX_AGE, null) :
+                getReleaseApiService(cache, BaseCacheInterceptor.DEFAULT_NETWORK_CACHE_MAX_AGE, null);
     }
 
     /**

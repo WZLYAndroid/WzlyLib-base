@@ -1,10 +1,8 @@
 package com.wzly.base.retrofit.interceptor;
 
 
-import android.os.Build;
 import android.util.ArrayMap;
 
-import com.wzly.base.utils.AppUtil;
 import com.wzly.base.utils.NetworkUtil;
 
 import java.io.IOException;
@@ -67,47 +65,12 @@ public abstract class BaseCacheInterceptor implements Interceptor {
         this.cacheMaxAge = cacheMaxAge;
     }
 
-    protected String getUserAgent() {
-        String userAgent;
-
-        String versionInfo = AppUtil.isAppDebug(AppUtil.getContext()) ?
-                getDebugAgentName() + "/" :
-                getReleseAgentName() + "/";
-        //APP版本
-        String versionName = versionInfo + AppUtil.getAppVersionName(AppUtil.getContext());
-        //modle
-        String modle = Build.MODEL + "/" + Build.VERSION.RELEASE;
-        //系统版本
-        String systemVersion = Build.BRAND + " " + Build.VERSION.RELEASE;
-
-        userAgent = versionName + "(" + "Android;" + systemVersion + ";" + modle + ")";
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0, length = userAgent.length(); i < length; i++) {
-            char c = userAgent.charAt(i);
-            if (c <= '\u001f' || c >= '\u007f') {
-                sb.append(String.format("\\u%04x", (int) c));
-            } else {
-                sb.append(c);
-            }
-        }
-        return sb.toString();
+    /**
+     * 无网络缓存时效， 默认 24 小时
+     */
+    protected int getCacheMaxStaleHours() {
+        return 24;
     }
-
-    /**
-     * @return debug 版本名 ：  wzly_debug
-     */
-    protected abstract String getDebugAgentName();
-
-    /**
-     * @return debug 版本名 ：  wzly
-     */
-    protected abstract String getReleseAgentName();
-
-    /**
-     * 请求头处理
-     */
-    protected abstract Request.Builder requestHeader(Request request);
 
     @NonNull
     @Override
@@ -115,7 +78,7 @@ public abstract class BaseCacheInterceptor implements Interceptor {
         Request request = chain.request();
         boolean netAvailable = NetworkUtil.isConnected();
 
-        Request.Builder requestBuilder = requestHeader(request);
+        Request.Builder requestBuilder = request.newBuilder();
 
         switch (cache) {
             case CACHE_CONTROL_FORCE_CACHE:
@@ -159,7 +122,7 @@ public abstract class BaseCacheInterceptor implements Interceptor {
                     .removeHeader("Pragma")
                     .removeHeader("Cache-Control")
                     // 无网络时，设置超时为 1 天
-                    .header("Cache-Control", "public, only-if-cached, max-stale=" + 24 * 60 * 60)
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + getCacheMaxStaleHours() * 60 * 60)
                     .build();
         }
         return response;
@@ -185,17 +148,4 @@ public abstract class BaseCacheInterceptor implements Interceptor {
         }
         return map;
     }
-
-//    private String getSignParam(Map<String, String> map) {
-//        Map<String, String> resultMap = MapUtil.sortMapByKey(map);
-//        StringBuilder buffer = new StringBuilder();
-//        for (Map.Entry<String, String> entry : resultMap.entrySet()) {
-//            buffer.append(entry.getKey()).append(entry.getValue());
-//        }
-////        Logger.d("zzz=>>>拼接后:" + buffer.toString());
-//        buffer.append(HttpUrlConstant.APP_SECREY);
-////        Logger.d("zzz=>>>加上app_secret后:" + buffer.toString());
-//        //        Logger.d("zzz=>>>md5 并转大写后:" + md5);
-//        return EncryptionUtil.getStringMD5(buffer.toString()).toUpperCase();
-//    }
 }
